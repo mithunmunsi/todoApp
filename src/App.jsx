@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { MdDeleteForever } from 'react-icons/md';
 import { FiCircle } from 'react-icons/fi';
+import Header from './Header';
 
 const App = () => {
   const [todos, setTodos] = useState([]);
@@ -108,62 +109,66 @@ const App = () => {
   let month = new Date().toLocaleDateString('en-us', { month: 'short' });
 
   return (
-    <div className="app-container">
-      <div className="header-section">
-        <h4 className="date">
-          {`${Today},`} <span>{`${day} ${month}`}</span>
-        </h4>
-        <div className="app-form-container">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              value={todoItem}
-              className={error ? 'error' : ''}
-              onChange={(e) => setTodoItem(e.target.value)}
-              placeholder="Type Todo here..."
-            />
-            <button type="submit" className="btn">
-              Add Todo
-            </button>
-          </form>
-        </div>
-        <div className="data-card-container">
-          <div className="data-card">
-            <h5>{todos.length < 10 ? `0${todos.length}` : todos.length}</h5>
-            <p>Created tasks</p>
-          </div>
-          <div className="data-card">
-            <h5>
-              {completedTasks < 10 ? `0${completedTasks}` : completedTasks}
-            </h5>
-            <p>Completed tasks</p>
-          </div>
-        </div>
-      </div>
-      <div className="todo-container">
-        {todos.map((todoItem) => {
-          const { id, todo, complete } = todoItem;
-          return (
-            <div key={id} className="todo-card">
-              <div className="icon" onClick={() => toggleComplete(id)}>
-                {!complete ? (
-                  <FiCircle />
-                ) : (
-                  <IoIosCheckmarkCircle
-                    className={complete ? 'icon-done' : ''}
-                  />
-                )}
-              </div>
-              <p className={complete ? 'text-done' : ''}>{todo}</p>
-              <MdDeleteForever
-                onClick={() => deleteTodo(id)}
-                className="icon delete-icon"
+    <>
+      <Header />
+
+      <div className="app-container">
+        <div className="header-section">
+          <h4 className="date">
+            {`${Today},`} <span>{`${day} ${month}`}</span>
+          </h4>
+          <div className="app-form-container">
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                value={todoItem}
+                className={error ? 'error' : ''}
+                onChange={(e) => setTodoItem(e.target.value)}
+                placeholder="Type Todo here..."
               />
+              <button type="submit" className="btn">
+                Add Todo
+              </button>
+            </form>
+          </div>
+          <div className="data-card-container">
+            <div className="data-card">
+              <h5>{todos.length < 10 ? `0${todos.length}` : todos.length}</h5>
+              <p>Created tasks</p>
             </div>
-          );
-        })}
+            <div className="data-card">
+              <h5>
+                {completedTasks < 10 ? `0${completedTasks}` : completedTasks}
+              </h5>
+              <p>Completed tasks</p>
+            </div>
+          </div>
+        </div>
+        <div className="todo-container">
+          {todos.map((todoItem) => {
+            const { id, todo, complete } = todoItem;
+            return (
+              <div key={id} className="todo-card">
+                <div className="icon" onClick={() => toggleComplete(id)}>
+                  {!complete ? (
+                    <FiCircle />
+                  ) : (
+                    <IoIosCheckmarkCircle
+                      className={complete ? 'icon-done' : ''}
+                    />
+                  )}
+                </div>
+                <p className={complete ? 'text-done' : ''}>{todo}</p>
+                <MdDeleteForever
+                  onClick={() => deleteTodo(id)}
+                  className="icon delete-icon"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
